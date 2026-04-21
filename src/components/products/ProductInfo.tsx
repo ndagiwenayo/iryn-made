@@ -33,6 +33,7 @@ export default function ProductInfo({ product, isLoggedIn }: Props) {
     setLoading(false);
     if (result.success) {
       setMessage({ text: "Added to your bag", type: "success" });
+      router.refresh();
       setTimeout(() => setMessage(null), 3000);
     } else {
       setMessage({ text: result.error || "Failed to add", type: "error" });

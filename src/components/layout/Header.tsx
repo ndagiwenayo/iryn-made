@@ -115,7 +115,7 @@ const navItems = [
   { label: "Sale", href: "/products?sale=true", mega: null, highlight: true },
 ];
 
-export default function Header({ promo }: { promo?: string }) {
+export default function Header({ promo, cartCount = 0 }: { promo?: string; cartCount?: number }) {
   const { data: session } = useSession();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -200,6 +200,11 @@ export default function Header({ promo }: { promo?: string }) {
                   aria-label="Bag"
                 >
                   <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#b8953a] text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </span>
+                  )}
                 </Link>
               </div>
             </div>
