@@ -165,9 +165,13 @@ export default function Header({ promo, cartCount = 0 }: { promo?: string; cartC
                   <span className="font-editorial text-xl md:text-[22px] font-bold tracking-[0.15em]">
                     IRYN MADE
                   </span>
-                  <span className="text-[9px] tracking-[0.4em] text-[#8a8a8a] uppercase mt-1 flex items-center gap-1">
-                    <span className="text-xs leading-none">🇷🇼</span>
-                    Made in Rwanda
+                  <span className="text-[9px] tracking-[0.4em] text-[#8a8a8a] uppercase mt-1 flex items-center gap-1.5 flex-wrap">
+                    Fashion Destination
+                    <span className="text-[#b8953a]">·</span>
+                    <span className="flex items-center gap-1">
+                      <span className="text-xs leading-none">🇷🇼</span>
+                      Rwanda
+                    </span>
                   </span>
                 </div>
               </Link>
