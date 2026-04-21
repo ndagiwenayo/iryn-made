@@ -1,103 +1,165 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { HERO_IMAGES_ROTATION } from "@/lib/instagram";
 
+const slides = [
+  {
+    kicker: "Spring / Summer 2025",
+    titleLine1: "Wear the",
+    titleLine2Italic: "Extraordinary",
+    subtitle:
+      "Luxury fashion handcrafted in Rwanda. Discover bridal couture, designer bags, and bespoke tailoring.",
+    cta1: { label: "Shop New In", href: "/products" },
+    cta2: { label: "Shop Bridal", href: "/products?category=bridal-clothes" },
+    image: HERO_IMAGES_ROTATION[0],
+  },
+  {
+    kicker: "Bridal Edit",
+    titleLine1: "Your perfect",
+    titleLine2Italic: "moment",
+    subtitle:
+      "Hand-embroidered gowns crafted for the day you've been dreaming of.",
+    cta1: { label: "Shop Bridal", href: "/products?category=bridal-clothes" },
+    cta2: { label: "Custom Orders", href: "/contact" },
+    image: HERO_IMAGES_ROTATION[1],
+  },
+  {
+    kicker: "Contemporary",
+    titleLine1: "Modern",
+    titleLine2Italic: "silhouettes",
+    subtitle:
+      "Ready-to-wear pieces that blend tradition with fresh design.",
+    cta1: { label: "Shop Women", href: "/products?category=women" },
+    cta2: { label: "View All", href: "/products" },
+    image: HERO_IMAGES_ROTATION[2],
+  },
+  {
+    kicker: "Made in Rwanda",
+    titleLine1: "Crafted with",
+    titleLine2Italic: "love",
+    subtitle:
+      "Every piece tells a story. Every stitch carries care.",
+    cta1: { label: "Our Story", href: "/about" },
+    cta2: { label: "Shop All", href: "/products" },
+    image: HERO_IMAGES_ROTATION[3],
+  },
+];
+
 export default function HeroSection() {
-  const [current, setCurrent] = useState(0);
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((i) => (i + 1) % HERO_IMAGES_ROTATION.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+    if (paused) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % slides.length), 5000);
+    return () => clearInterval(t);
+  }, [paused]);
+
+  const next = () => setIdx((i) => (i + 1) % slides.length);
+  const prev = () => setIdx((i) => (i - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative bg-white">
-      <div className="grid md:grid-cols-2 min-h-[80vh] md:min-h-[calc(100vh-140px)]">
-        {/* Left - Text */}
-        <div className="flex items-center justify-center px-6 md:px-16 py-16 bg-[#fafaf8] order-2 md:order-1">
-          <div className="max-w-lg animate-slide-up">
-            <p className="text-kicker text-[#8a8a8a] mb-6">
-              Spring / Summer 2025
-            </p>
-            <h1 className="font-editorial text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8">
-              Wear the <br />
-              <em className="italic text-[#b8953a]">Extraordinary</em>
-            </h1>
-            <p className="text-base md:text-lg text-[#3a3a3a] mb-10 leading-relaxed">
-              Luxury fashion handcrafted in Rwanda. Discover bridal couture,
-              designer pieces, and bespoke tailoring — available to purchase or
-              rent.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/products"
-                className="group inline-flex items-center gap-2 bg-[#0a0a0a] text-white px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold hover:bg-[#b8953a] transition-colors"
-              >
-                Shop New In
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-              <Link
-                href="/products?category=bridal-clothes"
-                className="inline-flex items-center gap-2 border border-[#0a0a0a] text-[#0a0a0a] px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold hover:bg-[#0a0a0a] hover:text-white transition-colors"
-              >
-                Shop Bridal
-              </Link>
+    <section
+      className="relative bg-[#0a0a0a] text-white overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+    >
+      {/* Full-bleed image background */}
+      <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[16/8] max-h-[90vh]">
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              i === idx ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.titleLine1}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Gradient overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 md:bg-gradient-to-r md:from-black/85 md:via-black/40 md:to-transparent" />
+
+            {/* Content */}
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20 pb-10 md:pb-0">
+                <div className="max-w-xl animate-slide-up">
+                  <p className="text-[10px] sm:text-xs md:text-sm tracking-[0.4em] uppercase text-[#D4AF37] mb-4 md:mb-6">
+                    {slide.kicker}
+                  </p>
+                  <h1 className="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] mb-4 md:mb-6">
+                    {slide.titleLine1} <br />
+                    <em className="italic text-[#D4AF37]">
+                      {slide.titleLine2Italic}
+                    </em>
+                  </h1>
+                  <p className="text-sm sm:text-base md:text-lg text-white/80 mb-6 md:mb-10 max-w-lg leading-relaxed">
+                    {slide.subtitle}
+                  </p>
+                  <div className="flex flex-wrap gap-2 md:gap-3">
+                    <Link
+                      href={slide.cta1.href}
+                      className="group inline-flex items-center gap-2 bg-white text-black px-5 py-3 md:px-8 md:py-4 text-[10px] md:text-xs tracking-[0.15em] uppercase font-semibold hover:bg-[#D4AF37] hover:text-black transition-colors"
+                    >
+                      {slide.cta1.label}
+                      <ArrowUpRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </Link>
+                    <Link
+                      href={slide.cta2.href}
+                      className="inline-flex items-center gap-2 border border-white text-white px-5 py-3 md:px-8 md:py-4 text-[10px] md:text-xs tracking-[0.15em] uppercase font-semibold hover:bg-white hover:text-black transition-colors"
+                    >
+                      {slide.cta2.label}
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        ))}
+
+        {/* Arrows (hidden on very small screens, shown sm+) */}
+        <button
+          onClick={prev}
+          className="hidden sm:flex absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-sm items-center justify-center transition-colors z-10 rounded-full"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={next}
+          className="hidden sm:flex absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/30 backdrop-blur-sm items-center justify-center transition-colors z-10 rounded-full"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={1.5} />
+        </button>
+
+        {/* Dots */}
+        <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              className={`h-1 rounded-full transition-all ${
+                i === idx ? "w-8 bg-[#D4AF37]" : "w-4 bg-white/40 hover:bg-white/70"
+              }`}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
         </div>
 
-        {/* Right - Rotating photo */}
-        <div className="relative overflow-hidden bg-[#0a0a0a] order-1 md:order-2">
-          {HERO_IMAGES_ROTATION.map((img, i) => (
-            <div
-              key={img}
-              className="absolute inset-0 transition-opacity duration-1000"
-              style={{ opacity: i === current ? 1 : 0 }}
-            >
-              <img
-                src={img}
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-
-          {/* Subtle gradient for legibility of overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-
-          {/* Corner label */}
-          <div className="absolute top-6 right-6 md:top-10 md:right-10 text-white mix-blend-difference">
-            <div className="border-t border-r border-white/40 w-16 md:w-24 h-16 md:h-24 relative">
-              <div className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-[#b8953a]" />
-            </div>
-          </div>
-          <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-[10px] md:text-xs tracking-[0.3em] uppercase text-white mix-blend-difference">
-            N° 01 / 2025
-          </div>
-
-          {/* Rotation indicator */}
-          <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 flex gap-2">
-            {HERO_IMAGES_ROTATION.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`h-[2px] transition-all ${
-                  i === current ? "w-10 bg-white" : "w-6 bg-white/40"
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+        {/* Slide counter corner */}
+        <div className="absolute top-4 right-4 md:top-6 md:right-6 text-[10px] md:text-xs tracking-[0.3em] text-white/60 font-mono z-10">
+          {String(idx + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
         </div>
       </div>
 
-      {/* Bottom strip */}
-      <div className="grid grid-cols-2 md:grid-cols-4 border-y border-[#e7e5e0] bg-white">
+      {/* Bottom strip with USPs */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border-t border-white/10 bg-[#0a0a0a]">
         {[
           { num: "01", label: "Free Shipping", sub: "Orders over RWF 200K" },
           { num: "02", label: "Designer Pieces", sub: "Curated collection" },
@@ -106,15 +168,19 @@ export default function HeroSection() {
         ].map((item, i) => (
           <div
             key={item.num}
-            className={`px-6 md:px-8 py-6 md:py-8 ${
-              i < 3 ? "border-r border-[#e7e5e0]" : ""
-            } ${i < 2 ? "border-b md:border-b-0 border-[#e7e5e0]" : ""}`}
+            className={`px-4 sm:px-6 md:px-8 py-5 md:py-8 ${
+              i < 3 ? "md:border-r border-white/10" : ""
+            } ${i % 2 === 0 ? "border-r md:border-r border-white/10" : ""} ${
+              i < 2 ? "border-b md:border-b-0 border-white/10" : ""
+            }`}
           >
-            <p className="text-[10px] tracking-[0.3em] text-[#b8953a] mb-2">
+            <p className="text-[10px] tracking-[0.3em] text-[#D4AF37] mb-2">
               {item.num}
             </p>
-            <p className="text-sm font-semibold mb-1">{item.label}</p>
-            <p className="text-xs text-[#8a8a8a]">{item.sub}</p>
+            <p className="text-xs md:text-sm font-semibold mb-1 text-white">
+              {item.label}
+            </p>
+            <p className="text-[10px] md:text-xs text-white/50">{item.sub}</p>
           </div>
         ))}
       </div>
