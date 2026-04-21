@@ -90,7 +90,7 @@ export default function HeroSection() {
         <div
           className="absolute inset-0 flex transition-transform duration-[900ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
           style={{
-            transform: `translateX(-${idx * 100}%)`,
+            transform: `translateX(-${(idx * 100) / slides.length}%)`,
             width: `${slides.length * 100}%`,
           }}
         >
