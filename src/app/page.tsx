@@ -7,6 +7,7 @@ import EditorialSection from "@/components/home/EditorialSection";
 import EditsSection from "@/components/home/EditsSection";
 import Newsletter from "@/components/home/Newsletter";
 import Lookbook from "@/components/home/Lookbook";
+import ServicePromises from "@/components/home/ServicePromises";
 import ProductCard from "@/components/ui/ProductCard";
 
 async function getFeaturedProducts() {
