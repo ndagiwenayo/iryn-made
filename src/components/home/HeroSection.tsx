@@ -85,7 +85,7 @@ export default function HeroSection() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[16/8] max-h-[90vh] overflow-hidden">
+      <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] max-h-[85vh] overflow-hidden">
         {/* Sliding track */}
         <div
           className="absolute inset-0 flex transition-transform duration-[900ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
@@ -104,6 +104,7 @@ export default function HeroSection() {
                 src={slide.image}
                 alt={slide.titleLine1}
                 className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: "center 30%" }}
                 draggable={false}
               />
               {/* Gradient overlay */}
