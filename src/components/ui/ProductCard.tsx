@@ -36,6 +36,9 @@ export default function ProductCard({ product }: Props) {
   const discountPercent = hasDiscount
     ? Math.round((1 - product.salePrice! / product.price) * 100)
     : 0;
+  const createdDate = new Date(product.createdAt);
+  const daysSinceCreated = (Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
+  const isNew = daysSinceCreated <= 30;
 
   const primaryImg = product.images?.[0];
   const secondaryImg = product.images?.[1] || primaryImg;
@@ -64,6 +67,11 @@ export default function ProductCard({ product }: Props) {
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {isNew && !hasDiscount && (
+              <span className="bg-[#b8953a] text-white text-[10px] font-bold px-2 py-1 tracking-wider">
+                NEW
+              </span>
+            )}
             {hasDiscount && (
               <span className="bg-[#c23232] text-white text-[10px] font-bold px-2 py-1 tracking-wider">
                 -{discountPercent}%

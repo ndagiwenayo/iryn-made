@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Heart, ShoppingBag, Search, User, Menu, X } from "lucide-react";
 import MarqueeBar from "./MarqueeBar";
+import SearchBar from "./SearchBar";
 
 const navItems = [
   {
@@ -176,11 +177,16 @@ export default function Header({ promo, cartCount = 0 }: { promo?: string; cartC
                 </div>
               </Link>
 
+              {/* Search bar - desktop */}
+              <div className="hidden md:flex flex-1 max-w-md mx-6">
+                <SearchBar />
+              </div>
+
               {/* Icons */}
               <div className="flex items-center gap-1 md:gap-3">
                 <Link
                   href="/products"
-                  className="hidden sm:flex p-2 hover:bg-[#f5f4f0] transition-colors"
+                  className="sm:hidden p-2 hover:bg-[#f5f4f0] transition-colors"
                   aria-label="Search"
                 >
                   <Search className="w-5 h-5" strokeWidth={1.5} />

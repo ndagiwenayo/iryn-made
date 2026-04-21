@@ -55,6 +55,7 @@ export default async function Home() {
   return (
     <>
       <HeroSection />
+      <ServicePromises />
       <CategoryGrid />
       <EditsSection />
       {featured.length > 0 && (
