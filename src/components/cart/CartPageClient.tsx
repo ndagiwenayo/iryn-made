@@ -55,18 +55,54 @@ export default function CartPageClient({ items }: { items: SerializedCartItem[] 
         </div>
 
         {items.length === 0 ? (
-          <div className="text-center py-24 border border-[#e7e5e0] bg-[#fafaf8]">
-            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-6">
+          <div className="border border-[#e7e5e0] bg-[#fafaf8] py-16 md:py-24 px-6 text-center">
+            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-6 shadow-sm">
               <ShoppingBag className="w-7 h-7 text-[#8a8a8a]" strokeWidth={1.5} />
             </div>
-            <h2 className="font-editorial text-2xl font-bold mb-2">
+            <h2 className="font-editorial text-3xl font-bold mb-3">
               Your bag is empty
             </h2>
-            <p className="text-[#8a8a8a] mb-8 max-w-sm mx-auto">
-              Explore our latest collection and find something you&apos;ll love.
+            <p className="text-[#8a8a8a] mb-10 max-w-sm mx-auto">
+              Let&apos;s find something beautiful for you. Start with one of our favorites.
             </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 max-w-2xl mx-auto mb-8">
+              {[
+                { label: "New Arrivals", href: "/products", kicker: "Just in" },
+                { label: "Bridal", href: "/products?category=bridal-clothes", kicker: "Your day" },
+                { label: "Bags", href: "/products?category=bags", kicker: "Accessories" },
+                { label: "On Sale", href: "/products?sale=true", kicker: "Last chance", accent: true },
+              ].map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`p-4 md:p-5 border text-left transition-colors ${
+                    link.accent
+                      ? "bg-[#0a0a0a] text-white border-[#0a0a0a] hover:bg-[#b8953a]"
+                      : "bg-white border-[#e7e5e0] hover:border-[#0a0a0a]"
+                  }`}
+                >
+                  <p
+                    className={`text-[10px] tracking-[0.2em] uppercase mb-2 ${
+                      link.accent ? "text-[#D4AF37]" : "text-[#b8953a]"
+                    }`}
+                  >
+                    {link.kicker}
+                  </p>
+                  <p className="font-editorial text-lg font-bold">{link.label}</p>
+                  <p
+                    className={`text-[10px] tracking-[0.15em] uppercase mt-3 font-semibold ${
+                      link.accent ? "text-white/70" : "text-[#3a3a3a]"
+                    }`}
+                  >
+                    Shop →
+                  </p>
+                </Link>
+              ))}
+            </div>
             <Link href="/products">
-              <Button size="lg">Continue Shopping</Button>
+              <Button size="lg" variant="secondary">
+                Browse All Products
+              </Button>
             </Link>
           </div>
         ) : (

@@ -18,13 +18,13 @@ export default function Newsletter() {
   return (
     <section className="py-20 md:py-28 px-4 lg:px-8 bg-[#0a0a0a] text-white">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="text-kicker text-[#b8953a] mb-6">Stay Connected</p>
+        <p className="text-kicker text-[#b8953a] mb-6">15% Off Your First Order</p>
         <h2 className="font-editorial text-4xl md:text-6xl font-bold leading-[1] mb-6">
           Join the <em className="italic text-[#b8953a]">IRYN</em> Family
         </h2>
         <p className="text-base md:text-lg text-white/60 mb-10 max-w-xl mx-auto">
-          Be the first to receive new arrivals, styling inspiration, and
-          exclusive access to designer collections.
+          Sign up for exclusive access to new arrivals, styling inspiration,
+          and a <span className="text-[#b8953a] font-semibold">15% off welcome code</span>.
         </p>
         {submitted ? (
           <div className="inline-flex items-center gap-3 text-[#b8953a] text-base">

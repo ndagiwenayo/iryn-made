@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/HeroSection";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import EditorialSection from "@/components/home/EditorialSection";
+import EditsSection from "@/components/home/EditsSection";
 import Newsletter from "@/components/home/Newsletter";
 import Lookbook from "@/components/home/Lookbook";
 import ProductCard from "@/components/ui/ProductCard";
@@ -55,6 +56,7 @@ export default async function Home() {
     <>
       <HeroSection />
       <CategoryGrid />
+      <EditsSection />
       {featured.length > 0 && (
         <FeaturedProducts
           products={featured}

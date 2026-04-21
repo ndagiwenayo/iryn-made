@@ -74,6 +74,16 @@ export default function ProductCard({ product }: Props) {
                 DESIGNER
               </span>
             )}
+            {product.stockQuantity > 0 && product.stockQuantity <= 3 && (
+              <span className="bg-[#0a0a0a] text-white text-[10px] font-bold px-2 py-1 tracking-wider">
+                LAST CHANCE
+              </span>
+            )}
+            {product.stockQuantity === 0 && (
+              <span className="bg-white/90 text-[#0a0a0a] text-[10px] font-bold px-2 py-1 tracking-wider">
+                SOLD OUT
+              </span>
+            )}
           </div>
 
           {/* Wishlist button */}
